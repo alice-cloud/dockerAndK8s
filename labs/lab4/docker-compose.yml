@@ -1,0 +1,63 @@
+version: '3'
+services:
+  # frontend-dev:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile.dev
+  #   ports:
+  #    - "3000:3000"
+  #   volumes:
+  #     - ./frontend:/app
+  #   restart: always
+  
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+     - "3000:80"
+    restart: always
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+     - "5000:5000"
+    environment:
+     - REDIS_SERVER=redis
+     - RABBITMQ_SERVER=rabbitmq
+     - REDIS_HASHMAP_KEY=fibonacci
+    volumes:
+      - ./backend:/app
+    restart: always
+
+  caculate:
+    build:
+      context: ./calc_service
+    environment:
+     - REDIS_SERVER=redis
+     - RABBITMQ_SERVER=rabbitmq
+     - REDIS_HASHMAP_KEY=fibonacci
+    volumes:
+     - ./calc_service:/app
+    restart: always
+
+  notification:
+    build:
+      context: ./notification_service
+    ports:
+     - "8888:8888"
+    environment:
+     - port=8888
+    volumes:
+     - ./notification_service:/app
+    restart: always
+ 
+  rabbitmq:
+    image: "rabbitmq:3.7.8-alpine"
+    ports:
+     - "5672:5672"
+
+  redis:
+    image: "redis:alpine"
+    ports:
+     - "6379:6379"

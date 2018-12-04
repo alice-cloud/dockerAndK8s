@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+     - "5000:5000"
+    environment:
+     - REDIS_SERVER=redis
+    volumes:
+      - .:/app
+  redis:
+    image: "redis:alpine"

@@ -1,6 +1,0 @@
-Flask
-flask-redis
-sqlalchemy
-flask-sqlalchemy
-flask-migrate
-sqlalchemy-migrate
