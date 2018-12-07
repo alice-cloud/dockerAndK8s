@@ -1,5 +1,5 @@
-# 云计算课程
-
+# 云计算课程：
 - docker
 - docker-compose
 - kubernetes
+- kubernetes template
