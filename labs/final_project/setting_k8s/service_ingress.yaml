@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: fibonacci-ingress
+  namespace: default
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api/backend
+            backend:
+              serviceName: backend-service
+              servicePort: 5000
+          - path: /api/notification
+            backend:
+              serviceName: notification-service
+              servicePort: 8888
+          - path: /
+            backend:
+              serviceName: frontend-service
+              servicePort: 80

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calculation
+  labels:
+    app: calculation
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: calculation
+  template:
+    metadata:
+      labels:
+        app: calculation
+    spec:
+      containers:
+      - name: calculation
+        image: calculation-service
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: REDIS_HASHMAP_KEY
+          value: "fibonacci"
+        - name: REDIS_SERVER
+          value: "redis-service"
+        - name: RABBITMQ_SERVER
+          value: "rabbitmq-service"

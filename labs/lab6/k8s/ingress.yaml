@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: demo-ingress
+  namespace: default
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: demo-service
+              servicePort: 5000

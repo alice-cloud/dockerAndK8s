@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: backend
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: REDIS_HASHMAP_KEY
+          value: "fibonacci"
+        - name: REDIS_SERVER
+          value: "redis-service"
+        - name: RABBITMQ_SERVER
+          value: "rabbitmq-service"
+        ports:
+        - containerPort: 5000
